@@ -12,7 +12,7 @@ class UpdateData extends Component {
 
   onSubmit = async (event) => {
     event.preventDefault();
-
+    console.log(this.state);
     const { endpoint, method, fetchData, closeModal } = this.props;
 
     let response = await fetch(endpoint, {
@@ -23,11 +23,11 @@ class UpdateData extends Component {
       },
     });
     if (response.ok) {
-      let data = await response.json();
-      console.log(data);
-      this.setState({
-        id: data.id,
-      });
+      // let data = await response.json();
+      // console.log(data);
+      // this.setState({
+      //   id: data.id,
+      // });
       closeModal();
       fetchData();
     } else {
