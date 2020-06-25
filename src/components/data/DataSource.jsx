@@ -4,7 +4,7 @@ class DataSource extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      students: [],
+      data: [],
       loading: false,
       error: undefined,
     };
@@ -19,10 +19,11 @@ class DataSource extends Component {
   };
 
   fecthData = async () => {
-    let response = await fetch("http://localhost:3000/students/");
+    const { endpoint, param } = this.props;
+    let response = await fetch(endpoint);
     if (response.ok) {
-      let students = await response.json();
-      this.setState({ students });
+      let data = await response.json();
+      this.setState({ data });
       console.log(this.state);
     } else {
       let error = await response.json();
@@ -32,7 +33,8 @@ class DataSource extends Component {
   };
 
   handleDelete = async (id) => {
-    let response = await fetch(`http://localhost:3000/students/${id}`, {
+    const { endpoint, param } = this.props;
+    let response = await fetch(endpoint + id, {
       method: "DELETE",
     });
     if (response.ok) {

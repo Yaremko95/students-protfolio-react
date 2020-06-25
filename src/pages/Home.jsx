@@ -1,6 +1,6 @@
 import React from "react";
 import DataSource from "../components/data/DataSource";
-import HomeContainer from "../components/ui/home/HomeContainer";
+
 import { Button, Form, Row, Table } from "react-bootstrap";
 import ModalCustom from "../components/ui/modal/ModalCustom";
 import UpdateData from "../components/data/UpdateData";
@@ -8,8 +8,8 @@ import DataForm from "../components/form/DataForm";
 
 function Home(props) {
   return (
-    <DataSource>
-      {({ students, handleDelete, fetchData }) => {
+    <DataSource endpoint={"http://localhost:3000/students/"}>
+      {({ data, handleDelete, fetchData }) => {
         return (
           <>
             <ModalCustom trigger={<Button variant="primary">Update</Button>}>
@@ -35,7 +35,7 @@ function Home(props) {
                   </tr>
                 </thead>
                 <tbody>
-                  {students.map((student) => (
+                  {data.map((student) => (
                     <tr key={student.id}>
                       <td>{student.id}</td>
                       <td>{student.name}</td>
@@ -55,7 +55,7 @@ function Home(props) {
                           trigger={<Button variant="primary">Update</Button>}
                         >
                           <UpdateData
-                            student={student}
+                            data={student}
                             fetchData={fetchData}
                             method={"PUT"}
                             endpoint={`http://localhost:3000/students/${student.id}`}

@@ -5,7 +5,7 @@ class UpdateData extends Component {
     super(props);
 
     this.state = {
-      student: this.props.student || {},
+      data: this.props.data || {},
     };
     console.log("updateData", this.state.student);
   }
@@ -17,7 +17,7 @@ class UpdateData extends Component {
 
     let response = await fetch(endpoint, {
       method: method,
-      body: JSON.stringify(this.state.student),
+      body: JSON.stringify(this.state.data),
       headers: {
         "Content-Type": "application/json",
       },
@@ -37,10 +37,10 @@ class UpdateData extends Component {
   };
 
   render() {
-    const { student } = this.state;
+    const { data } = this.state;
     return React.cloneElement(this.props.children, {
       state: this.state,
-      setData: (state) => this.setState({ student: { ...student, ...state } }),
+      setData: (state) => this.setState({ data: { ...data, ...state } }),
       onSubmit: (e) => this.onSubmit(e),
 
       ...this.state,
