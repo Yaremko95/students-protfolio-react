@@ -19,8 +19,18 @@ class DataSource extends Component {
   };
 
   fecthData = async () => {
-    const { endpoint, param } = this.props;
-    let response = await fetch(endpoint);
+    const { endpoint, query } = this.props;
+    console.log("query", query);
+    // if(query!=='') {
+    // let  response = await fetch(`${endpoint}?${query}`);
+    // } else
+    let response = {};
+    if (query.length > 0) {
+      response = await fetch(`${endpoint}?country=${query}`);
+    } else {
+      response = await fetch(endpoint);
+    }
+
     if (response.ok) {
       let data = await response.json();
       this.setState({ data });
