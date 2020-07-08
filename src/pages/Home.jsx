@@ -1,5 +1,6 @@
 import React from "react";
 import DataSource from "../components/data/DataSource";
+import ReactPaginate from "react-paginate";
 
 import { Button, Form, FormControl, Navbar, Row, Table } from "react-bootstrap";
 import ModalCustom from "../components/ui/modal/ModalCustom";
@@ -8,15 +9,21 @@ import DataForm from "../components/form/DataForm";
 
 function Home(props) {
   const [query, setQuery] = React.useState("");
-  const handleChange = (query) => {
-    setQuery(query);
+  const [page, setPage] = React.useState(1);
+  const handlePageClick = (data) => {
+    setPage(data.selected);
+    console.log(page);
   };
   return (
-    <DataSource endpoint={"http://localhost:3000/students/"} query={query}>
+    <DataSource
+      endpoint={"http://localhost:3000/students/"}
+      query={query}
+      page={page}
+    >
       {({ data, handleDelete, fetchData }) => {
         return (
           <>
-            <div className={"d-flex"}>
+            <div className={"d-flex justify-content-between"}>
               <ModalCustom
                 trigger={<Button variant="primary">Add Student</Button>}
               >
@@ -40,6 +47,26 @@ function Home(props) {
                   Search by country
                 </Button>
               </Form>
+              <ReactPaginate
+                previousLabel={"previous"}
+                nextLabel={"next"}
+                breakLabel={"..."}
+                pageCount={100}
+                forcePage={page}
+                onPageChange={handlePageClick}
+                marginPagesDisplayed={1}
+                pageRangeDisplayed={3}
+                breakClassName={"page-item"}
+                breakLinkClassName={"page-link"}
+                containerClassName={"pagination"}
+                pageClassName={"page-item"}
+                pageLinkClassName={"page-link"}
+                previousClassName={"page-item"}
+                previousLinkClassName={"page-link"}
+                nextClassName={"page-item"}
+                nextLinkClassName={"page-link"}
+                activeClassName={"active"}
+              />
             </div>
 
             <Row className={"mt-3"}>

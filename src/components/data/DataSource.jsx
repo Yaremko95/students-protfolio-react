@@ -7,6 +7,7 @@ class DataSource extends Component {
       data: [],
       loading: false,
       error: undefined,
+      page: this.props.page,
     };
   }
   componentDidMount = async () => {
@@ -14,6 +15,10 @@ class DataSource extends Component {
   };
   componentDidUpdate = (prevProps) => {
     if (prevProps.query !== this.props.query) {
+      this.fecthData();
+    }
+    if (prevProps.page !== this.props.page) {
+      console.log("changed");
       this.fecthData();
     }
   };
@@ -28,7 +33,7 @@ class DataSource extends Component {
     if (query.length > 0) {
       response = await fetch(`${endpoint}?country=${query}`);
     } else {
-      response = await fetch(endpoint);
+      response = await fetch(`${endpoint}?page=${this.props.page}`);
     }
 
     if (response.ok) {
@@ -41,6 +46,12 @@ class DataSource extends Component {
       console.log(this.state);
     }
   };
+  // handlePageChange = (data) => {
+  //   console.log(data);
+  //   this.setState({ page: data.selected });
+  //
+  //   // this.fecthData();
+  // };
 
   handleDelete = async (id) => {
     const { endpoint, param } = this.props;
