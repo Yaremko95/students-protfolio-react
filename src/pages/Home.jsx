@@ -9,7 +9,7 @@ import DataForm from "../components/form/DataForm";
 
 function Home(props) {
   const [query, setQuery] = React.useState("");
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = React.useState(0);
   const handlePageClick = (data) => {
     setPage(data.selected);
     console.log(page);
@@ -51,7 +51,7 @@ function Home(props) {
                 previousLabel={"previous"}
                 nextLabel={"next"}
                 breakLabel={"..."}
-                pageCount={100}
+                pageCount={data.pageCount}
                 forcePage={page}
                 onPageChange={handlePageClick}
                 marginPagesDisplayed={1}

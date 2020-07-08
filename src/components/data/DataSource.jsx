@@ -7,7 +7,7 @@ class DataSource extends Component {
       data: [],
       loading: false,
       error: undefined,
-      page: this.props.page,
+      pageCount: null,
     };
   }
   componentDidMount = async () => {
@@ -38,7 +38,7 @@ class DataSource extends Component {
 
     if (response.ok) {
       let data = await response.json();
-      this.setState({ data: data.data });
+      this.setState({ data: data.data, pageCount: data.pages });
       console.log(this.state);
     } else {
       let error = await response.json();
