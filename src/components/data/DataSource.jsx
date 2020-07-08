@@ -33,7 +33,7 @@ class DataSource extends Component {
 
     if (response.ok) {
       let data = await response.json();
-      this.setState({ data });
+      this.setState({ data: data.data });
       console.log(this.state);
     } else {
       let error = await response.json();
