@@ -19,6 +19,7 @@ function Home(props) {
       endpoint={"http://localhost:3000/students/"}
       query={query}
       page={page}
+      queryKey={"country"}
     >
       {({ data, handleDelete, fetchData }) => {
         return (

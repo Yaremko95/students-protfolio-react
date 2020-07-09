@@ -1,17 +1,35 @@
 import React from "react";
 import DataSource from "../components/data/DataSource";
-import { Button, Row, Table } from "react-bootstrap";
+import { Button, Form, FormControl, Row, Table } from "react-bootstrap";
 import ModalCustom from "../components/ui/modal/ModalCustom";
 import UpdateData from "../components/data/UpdateData";
 import DataForm from "../components/form/DataForm";
 import ProjectForm from "../components/form/ProjectForm";
 
 function Projects(props) {
+  const [query, setQuery] = React.useState("");
   return (
-    <DataSource endpoint={"http://localhost:3000/projects/"}>
+    <DataSource
+      endpoint={"http://localhost:3000/projects/"}
+      page={null}
+      queryKey={"name"}
+      query={query}
+    >
       {({ data, handleDelete, fetchData }) => {
         return (
           <Row className={"mt-3"}>
+            <Form inline>
+              <FormControl
+                type="text"
+                placeholder="Search"
+                className="mr-sm-2"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+              <Button onClick={fetchData} variant="outline-info">
+                Search by country
+              </Button>
+            </Form>
             <Table striped bordered hover size="sm">
               <thead>
                 <tr>
@@ -27,11 +45,11 @@ function Projects(props) {
               </thead>
               <tbody>
                 {data.map((project) => (
-                  <tr key={project.id}>
-                    <td>{project.id}</td>
+                  <tr key={project._id}>
+                    <td>{project._id}</td>
                     <td>{project.name}</td>
                     <td>{project.description}</td>
-                    <td>{project.studentID}</td>
+                    <td>{project.studentID._id}</td>
                     <td>{project.repoURL}</td>
                     <td>{project.liveURL}</td>
                     <td>

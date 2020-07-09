@@ -8,6 +8,7 @@ class DataSource extends Component {
       loading: false,
       error: undefined,
       pageCount: null,
+      key: this.props.key,
     };
   }
   componentDidMount = async () => {
@@ -21,19 +22,28 @@ class DataSource extends Component {
       console.log("changed");
       this.fecthData();
     }
+    if (prevProps.queryKey !== this.props.queryKey) {
+      console.log("changed");
+      this.fecthData();
+    }
   };
 
   fecthData = async () => {
-    const { endpoint, query } = this.props;
+    const { endpoint, query, queryKey } = this.props;
     console.log("query", query);
     // if(query!=='') {
     // let  response = await fetch(`${endpoint}?${query}`);
     // } else
     let response = {};
-    if (query.length > 0) {
-      response = await fetch(`${endpoint}?country=${query}`);
+    if (query && query.length > 0) {
+      response = await fetch(
+        `${endpoint}?${queryKey}=${query}&page=${this.props.page}`
+      );
+      console.log("key", queryKey);
+      console.log(`${endpoint}?${queryKey}=${query}&page=${this.props.page}`);
     } else {
       response = await fetch(`${endpoint}?page=${this.props.page}`);
+      console.log("first");
     }
 
     if (response.ok) {
