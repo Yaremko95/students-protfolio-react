@@ -30,7 +30,7 @@ function ProjectForm(props) {
         <Form.Control
           type="text"
           placeholder="Enter email"
-          value={data.studentID}
+          value={data.studentID._id}
           onChange={(e) => setData({ studentID: e.target.value })}
         />
       </Form.Group>

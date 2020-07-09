@@ -44,9 +44,6 @@ function Home(props) {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                 />
-                <Button onClick={fetchData} variant="outline-info">
-                  Search by country
-                </Button>
               </Form>
               <ReactPaginate
                 previousLabel={"previous"}
