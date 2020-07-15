@@ -8,22 +8,17 @@ class DataSource extends Component {
       loading: false,
       error: undefined,
       pageCount: null,
-      key: this.props.key,
     };
   }
   componentDidMount = async () => {
     this.fecthData();
   };
   componentDidUpdate = (prevProps) => {
-    if (prevProps.query !== this.props.query) {
-      this.fecthData();
-    }
-    if (prevProps.page !== this.props.page) {
-      console.log("changed");
-      this.fecthData();
-    }
-    if (prevProps.queryKey !== this.props.queryKey) {
-      console.log("changed");
+    if (
+      prevProps.query !== this.props.query ||
+      prevProps.page !== this.props.page ||
+      prevProps.queryKey !== this.props.queryKey
+    ) {
       this.fecthData();
     }
   };
@@ -59,8 +54,7 @@ class DataSource extends Component {
   // handlePageChange = (data) => {
   //   console.log(data);
   //   this.setState({ page: data.selected });
-  //
-  //   // this.fecthData();
+  //   this.fecthData();
   // };
 
   handleDelete = async (id) => {
@@ -78,6 +72,7 @@ class DataSource extends Component {
       ...this.state,
       handleDelete: (id) => this.handleDelete(id),
       fetchData: () => this.fecthData(),
+      // handlePageClick: (data) => this.handlePageChange(data),
     });
   }
 }

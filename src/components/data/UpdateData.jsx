@@ -7,14 +7,14 @@ class UpdateData extends Component {
     this.state = {
       data: this.props.data || {},
     };
-    console.log("updateData", this.state.student);
   }
 
   onSubmit = async (event) => {
     event.preventDefault();
-    console.log(this.state);
-    const { endpoint, method, fetchData, closeModal } = this.props;
 
+    const { endpoint, method, fetchData, closeModal } = this.props;
+    console.log("response", this.state.data);
+    delete this.state.data._id;
     let response = await fetch(endpoint, {
       method: method,
       body: JSON.stringify(this.state.data),
@@ -22,6 +22,7 @@ class UpdateData extends Component {
         "Content-Type": "application/json",
       },
     });
+
     if (response.ok) {
       // let data = await response.json();
       // console.log(data);

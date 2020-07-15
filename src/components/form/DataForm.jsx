@@ -36,16 +36,8 @@ function DataForm(props) {
         <Form.Label>Date of Birth</Form.Label>
         <Form.Control
           type="date"
-          value={data.birthDate}
-          onChange={(e) => setData({ birthDate: e.target.value })}
-        />
-      </Form.Group>
-      <Form.Group controlId="formBasicEmail">
-        <Form.Label>Date of Birth</Form.Label>
-        <Form.Control
-          type="text"
-          value={data.country}
-          onChange={(e) => setData({ country: e.target.value })}
+          value={data.dateOfBirth}
+          onChange={(e) => setData({ dateOfBirth: e.target.value })}
         />
       </Form.Group>
 

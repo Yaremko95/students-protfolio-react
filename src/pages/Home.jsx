@@ -19,7 +19,7 @@ function Home(props) {
       endpoint={"http://localhost:3000/students/"}
       query={query}
       page={page}
-      queryKey={"country"}
+      queryKey={"name"}
     >
       {({ data, handleDelete, fetchData }) => {
         return (
@@ -75,7 +75,6 @@ function Home(props) {
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email</th>
-                    <th>Country</th>
                     <th>Date of Birth</th>
                     <th>Delete</th>
                     <th>Update</th>
@@ -88,8 +87,7 @@ function Home(props) {
                       <td>{student.name}</td>
                       <td>{student.surname}</td>
                       <td>{student.email}</td>
-                      <td>{student.country}</td>
-                      <td>{student.birthDate}</td>
+                      <td>{student.dateOfBirth}</td>
                       <td>
                         <Button
                           onClick={() => handleDelete(student._id)}
