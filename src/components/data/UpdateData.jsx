@@ -29,6 +29,7 @@ class UpdateData extends Component {
       // this.setState({
       //   id: data.id,
       // });
+      console.log(response);
       closeModal();
       fetchData();
     } else {

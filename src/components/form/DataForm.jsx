@@ -33,6 +33,15 @@ function DataForm(props) {
         />
       </Form.Group>
       <Form.Group controlId="formBasicEmail">
+        <Form.Label>Image</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Enter image"
+          value={data.image}
+          onChange={(e) => setData({ image: e.target.value })}
+        />
+      </Form.Group>
+      <Form.Group controlId="formBasicEmail">
         <Form.Label>Date of Birth</Form.Label>
         <Form.Control
           type="date"

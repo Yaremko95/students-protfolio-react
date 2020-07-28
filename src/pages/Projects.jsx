@@ -46,9 +46,9 @@ function Projects(props) {
                     <td>{project._id}</td>
                     <td>{project.name}</td>
                     <td>{project.description}</td>
-                    <td>{project.studentID._id}</td>
-                    <td>{project.repoURL}</td>
-                    <td>{project.liveURL}</td>
+                    <td>{project.studentId}</td>
+                    <td>{project.repoUrl}</td>
+                    <td>{project.liveUrl}</td>
                     <td>
                       <Button
                         onClick={() => handleDelete(project._id)}

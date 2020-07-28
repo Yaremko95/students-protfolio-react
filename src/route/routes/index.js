@@ -1,6 +1,7 @@
 import MainLayout from "../../layout/MainLayout";
 import Home from "../../pages/Home";
 import Projects from "../../pages/Projects";
+import Student from "../../pages/Student";
 
 export default [
   {
@@ -13,7 +14,7 @@ export default [
     path: "/students/:studentId",
     exact: true,
     layout: MainLayout,
-    component: Home,
+    component: Student,
   },
   {
     path: "/projects",

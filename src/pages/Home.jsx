@@ -1,7 +1,7 @@
 import React from "react";
 import DataSource from "../components/data/DataSource";
 import ReactPaginate from "react-paginate";
-
+import { withRouter } from "react-router-dom";
 import { Button, Form, FormControl, Navbar, Row, Table } from "react-bootstrap";
 import ModalCustom from "../components/ui/modal/ModalCustom";
 import UpdateData from "../components/data/UpdateData";
@@ -21,7 +21,10 @@ function Home(props) {
       page={page}
       queryKey={"name"}
     >
-      {({ data, handleDelete, fetchData }) => {
+      {({ pageCount, data, handleDelete, fetchData }) => {
+        {
+          console.log("data", data);
+        }
         return (
           <>
             <div className={"d-flex justify-content-between"}>
@@ -49,7 +52,7 @@ function Home(props) {
                 previousLabel={"previous"}
                 nextLabel={"next"}
                 breakLabel={"..."}
-                pageCount={data.pageCount}
+                pageCount={pageCount}
                 forcePage={page}
                 onPageChange={handlePageClick}
                 marginPagesDisplayed={1}
@@ -83,7 +86,13 @@ function Home(props) {
                 <tbody>
                   {data.map((student) => (
                     <tr key={student._id}>
-                      <td>{student._id}</td>
+                      <td
+                        onClick={() =>
+                          props.history.push(`/students/${student._id}`)
+                        }
+                      >
+                        {student._id}
+                      </td>
                       <td>{student.name}</td>
                       <td>{student.surname}</td>
                       <td>{student.email}</td>
@@ -122,4 +131,4 @@ function Home(props) {
   );
 }
 
-export default Home;
+export default withRouter(Home);

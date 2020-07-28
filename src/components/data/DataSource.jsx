@@ -42,9 +42,10 @@ class DataSource extends Component {
     }
 
     if (response.ok) {
+      console.log(response);
       let data = await response.json();
-      this.setState({ data: data.data, pageCount: data.pages });
-      console.log(this.state);
+      this.setState({ data: data.data, pageCount: parseInt(data.pageCount) });
+      console.log("pageCount", this.state);
     } else {
       let error = await response.json();
       this.setState({ error });
