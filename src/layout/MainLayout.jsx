@@ -10,6 +10,7 @@ function MainLayout(props) {
       height: "100vh",
       fontFamily: "Playfair Display",
       color: "rgb(10, 26, 43)",
+      zIndex: "100",
     },
   });
   const classes = useStyles();

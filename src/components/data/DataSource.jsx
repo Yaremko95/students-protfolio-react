@@ -15,6 +15,7 @@ class DataSource extends Component {
   };
   componentDidUpdate = (prevProps) => {
     if (
+      prevProps.endpoint !== this.props.endpoint ||
       prevProps.query !== this.props.query ||
       prevProps.page !== this.props.page ||
       prevProps.queryKey !== this.props.queryKey
@@ -25,7 +26,7 @@ class DataSource extends Component {
 
   fecthData = async () => {
     const { endpoint, query, queryKey } = this.props;
-    console.log("query", query);
+
     // if(query!=='') {
     // let  response = await fetch(`${endpoint}?${query}`);
     // } else
@@ -34,22 +35,16 @@ class DataSource extends Component {
       response = await fetch(
         `${endpoint}?${queryKey}=${query}&page=${this.props.page}`
       );
-      console.log("key", queryKey);
-      console.log(`${endpoint}?${queryKey}=${query}&page=${this.props.page}`);
     } else {
       response = await fetch(`${endpoint}?page=${this.props.page}`);
-      console.log("first");
     }
 
     if (response.ok) {
-      console.log(response);
       let data = await response.json();
       this.setState({ data: data.data, pageCount: parseInt(data.pageCount) });
-      console.log("pageCount", this.state);
     } else {
       let error = await response.json();
       this.setState({ error });
-      console.log(this.state);
     }
   };
   // handlePageChange = (data) => {

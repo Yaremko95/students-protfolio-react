@@ -13,8 +13,10 @@ import { createUseStyles } from "react-jss";
 function NavBar(props) {
   const useStyle = createUseStyles({
     nav: {
-      backgroundColor: "#F3E2DD",
+      background:
+        "linear-gradient(41deg, rgba(249,241,239,1) 0%, rgba(249,241,239,1) 72%, rgba(255,255,255,1) 100%)",
       fontFamily: "Playfair Display",
+      zIndex: "100",
     },
   });
   const classes = useStyle();
