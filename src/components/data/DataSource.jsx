@@ -1,11 +1,13 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { isLoading } from "../../store/actions";
 
 class DataSource extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: [],
-      loading: false,
+      // loading: false,
       error: undefined,
       pageCount: null,
     };
@@ -20,22 +22,25 @@ class DataSource extends Component {
       prevProps.page !== this.props.page ||
       prevProps.queryKey !== this.props.queryKey
     ) {
+      console.log("chaaaanged", this.props);
       this.fecthData();
     }
   };
 
   fecthData = async () => {
     const { endpoint, query, queryKey } = this.props;
-
+    // this.props.isLoading();
     // if(query!=='') {
     // let  response = await fetch(`${endpoint}?${query}`);
     // } else
     let response = {};
+
     if (query && query.length > 0) {
       response = await fetch(
         `${endpoint}?${queryKey}=${query}&page=${this.props.page}`
       );
     } else {
+      console.log("before", this.props);
       response = await fetch(`${endpoint}?page=${this.props.page}`);
     }
 
@@ -46,6 +51,7 @@ class DataSource extends Component {
       let error = await response.json();
       this.setState({ error });
     }
+    this.props.isLoading();
   };
   // handlePageChange = (data) => {
   //   console.log(data);
@@ -65,6 +71,7 @@ class DataSource extends Component {
 
   render() {
     return this.props.children({
+      ...this.props.loading,
       ...this.state,
       handleDelete: (id) => this.handleDelete(id),
       fetchData: () => this.fecthData(),
@@ -73,4 +80,17 @@ class DataSource extends Component {
   }
 }
 
-export default DataSource;
+export default connect(
+  (state, router) => {
+    console.log("state in connect", state);
+    return {
+      loading: state.loading,
+    };
+  },
+
+  (dispatch) => ({
+    isLoading: () => {
+      dispatch(isLoading());
+    },
+  })
+)(DataSource);
