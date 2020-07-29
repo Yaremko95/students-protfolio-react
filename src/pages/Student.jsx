@@ -7,7 +7,7 @@ import Image from "react-bootstrap/Image";
 import { createUseStyles } from "react-jss";
 import ProfileImg from "../components/ui/profileImage/ProfileImg";
 import SliderContainer from "../components/ui/sideBar/SliderContainer";
-
+import { useSpring, animated } from "react-spring";
 function Student(props) {
   const useStyle = createUseStyles({
     profileContainer: {
@@ -25,6 +25,12 @@ function Student(props) {
   const classes = useStyle();
   const [selected, setSelected] = React.useState(props.match.params.studentId);
   console.log(selected);
+  const animate = useSpring({
+    opacity: 1,
+    from: { opacity: 0 },
+
+    reset: true,
+  });
   return (
     <Row>
       <Col className={"col-3"}>
@@ -43,14 +49,17 @@ function Student(props) {
       <DataSource endpoint={`http://localhost:3000/students/${selected}`}>
         {({ data }) => {
           return (
-            <Col className={"col-9 " + classes.profileContainer}>
+            <animated.div
+              className={"col-9 " + classes.profileContainer}
+              style={animate}
+            >
               <div>
                 <span className={classes.title}>
                   {data.name} {data.surname}
                 </span>
               </div>
               <ProfileImg data={data} />
-            </Col>
+            </animated.div>
           );
         }}
       </DataSource>

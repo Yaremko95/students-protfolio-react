@@ -11,11 +11,11 @@ function SliderContainer({ data, setSelected, selected }) {
       justifyContent: "center",
       width: "20%",
       top: "0",
-      left: "0",
-      boxShadow: "rgba(194, 175, 169, 0.55) 19px 30px 45px 5px",
+      marginLeft: "2rem",
+      // boxShadow: "rgba(194, 175, 169, 0.3) 5px 10px 15px 2px",
       height: "100vh",
 
-      background: "#ee7968",
+      // background: "#ee7968",
     },
   });
   const classes = useStyle();

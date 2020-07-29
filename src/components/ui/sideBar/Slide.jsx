@@ -1,6 +1,7 @@
 import React from "react";
 import { Spring, animated } from "react-spring/renderprops";
 import { createUseStyles } from "react-jss";
+import Image from "react-bootstrap/Image";
 function Slide({
   data,
   offsetRadius,
@@ -14,7 +15,7 @@ function Slide({
   const useStyle = createUseStyles({
     slideContainer: {
       position: "absolute",
-      height: "35%",
+      height: "30%",
       top: "50%",
       width: "100%",
       display: "flex",
@@ -27,12 +28,34 @@ function Slide({
       maxWidth: "100%",
       minWidth: "90%",
       height: "100%",
-      background: "white",
-      fontSize: "35px",
+      background: "#f5ebe7",
+      // fontSize: "35px",
       display: "flex",
-      alignItems: "center",
+      // alignItems: "center",
+      paddingTop: "4rem",
       justifyContent: "center",
       transformOrigin: "50% 50%",
+      boxShadow: "  rgba(194, 175, 169, 0.3) 5px 10px 15px 2px",
+      borderRadius: "10px",
+    },
+    title: {
+      position: "absolute",
+      top: "0%",
+      left: "25%",
+      color: "rgb(107, 103, 104)",
+      fontSize: "35px",
+      fontWeight: "600",
+      opacity: "0.9",
+
+      // textShadow: "1px 0px 4px rgba(150, 150, 150, 0.79)",
+    },
+    imgContainer: {
+      position: "absolute",
+      left: "-15px",
+      top: "-10px",
+      opacity: "0.8",
+      boxShadow: "  rgba(194, 175, 169, 0.6) 5px 10px 20px 5px",
+      borderRadius: "10px",
     },
   });
   const classes = useStyle();
@@ -93,7 +116,24 @@ function Slide({
             className={classes.slideCard}
             onClick={() => moveSlide(offsetFromMiddle, data._id)}
           >
-            <span style={{ color: "rgb(10, 26, 43)" }}>{data._id}</span>
+            <div className={classes.title}>
+              <span>
+                <i>
+                  {data.name} {data.surname}
+                </i>
+              </span>
+            </div>
+            <div className={classes.imgContainer}>
+              <Image
+                src={data.image}
+                style={{ width: "5rem", height: "10rem", objectFit: "cover" }}
+              />
+            </div>
+            <div>
+              <span>I'm available at:</span>
+              <br />
+              <span>{data.email}</span>
+            </div>
           </div>
         </div>
       )}
