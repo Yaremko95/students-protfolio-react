@@ -1,48 +1,62 @@
 import React, { Component } from "react";
-
+import { connect } from "react-redux";
+import { fetchData, isLoading } from "../../store/actions";
 class UpdateData extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      data: this.props.data || {},
+      singleData: this.props.singleData || {},
     };
   }
 
   onSubmit = async (event) => {
     event.preventDefault();
 
-    const { endpoint, method, fetchData, closeModal } = this.props;
+    const { endpoint, method, fetchData, closeModal, param } = this.props;
     console.log("response", this.state.data);
     delete this.state.data._id;
-    let response = await fetch(endpoint, {
-      method: method,
-      body: JSON.stringify(this.state.data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (response.ok) {
-      // let data = await response.json();
-      // console.log(data);
-      // this.setState({
-      //   id: data.id,
-      // });
-      console.log(response);
+    this.props.fetchData(
+      endpoint,
+      param ? param : "",
+      method,
+      this.state.singleData
+    );
+    if (!this.props.error) {
       closeModal();
-      fetchData();
-    } else {
-      let error = await response.json();
-      console.log(error);
+      this.props.isLoading();
+      this.props.fetchData(endpoint);
     }
+
+    // let response = await fetch(param? endpoint+param : endp, {
+    //   method: method,
+    //   body: JSON.stringify(this.state.data),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    //
+    // if (response.ok) {
+    //   // let data = await response.json();
+    //   // console.log(data);
+    //   // this.setState({
+    //   //   id: data.id,
+    //   // });
+    //   console.log(response);
+    //   closeModal();
+    //   fetchData();
+    // } else {
+    //   let error = await response.json();
+    //   console.log(error);
+    // }
   };
 
   render() {
-    const { data } = this.state;
+    const { singleData } = this.state;
     return React.cloneElement(this.props.children, {
       state: this.state,
-      setData: (state) => this.setState({ data: { ...data, ...state } }),
+      setData: (state) =>
+        this.setState({ singleData: { ...singleData, ...state } }),
       onSubmit: (e) => this.onSubmit(e),
 
       ...this.state,
@@ -50,4 +64,14 @@ class UpdateData extends Component {
   }
 }
 
-export default UpdateData;
+export default connect(
+  (state) => ({ ...state }),
+  (dispatch) => ({
+    fetchData: (endpoint, id, method, body, params) => {
+      dispatch(fetchData(endpoint, id, method, body, params));
+    },
+    isLoading: () => {
+      dispatch(isLoading());
+    },
+  })
+)(UpdateData);

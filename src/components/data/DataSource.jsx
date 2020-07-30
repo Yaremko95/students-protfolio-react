@@ -1,58 +1,61 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { isLoading } from "../../store/actions";
+import { isLoading, fetchData } from "../../store/actions";
 
 class DataSource extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      // data: [],
       // loading: false,
       error: undefined,
       pageCount: null,
     };
   }
   componentDidMount = async () => {
-    this.fecthData();
+    const { param } = this.props;
+    this.props.fetchData(this.props.endpoint, param ? param : "", "GET");
   };
   componentDidUpdate = (prevProps) => {
     if (
       prevProps.endpoint !== this.props.endpoint ||
       prevProps.query !== this.props.query ||
       prevProps.page !== this.props.page ||
-      prevProps.queryKey !== this.props.queryKey
+      prevProps.queryKey !== this.props.queryKey ||
+      prevProps.param !== this.props.param
     ) {
-      console.log("chaaaanged", this.props);
-      this.fecthData();
+      const { param } = this.props;
+      this.props.fetchData(this.props.endpoint, param ? param : "", "GET");
     }
   };
 
-  fecthData = async () => {
-    const { endpoint, query, queryKey } = this.props;
-    // this.props.isLoading();
-    // if(query!=='') {
-    // let  response = await fetch(`${endpoint}?${query}`);
-    // } else
-    let response = {};
+  // fecthData = async () => {
+  //   const { endpoint, query, queryKey } = this.props;
+  //   // this.props.isLoading();
+  //   // if(query!=='') {
+  //   // let  response = await fetch(`${endpoint}?${query}`);
+  //   // } else
+  //   let response = {};
+  //
+  //   if (query && query.length > 0) {
+  //     response = await fetch(
+  //       `${endpoint}?${queryKey}=${query}&page=${this.props.page}`
+  //     );
+  //   } else {
+  //     console.log("before", this.props);
+  //     response = await fetch(`${endpoint}?page=${this.props.page}`);
+  //   }
+  //
+  //   if (response.ok) {
+  //     let data = await response.json();
+  //     this.setState({ data: data.data, pageCount: parseInt(data.pageCount) });
+  //   } else {
+  //     let error = await response.json();
+  //     this.setState({ error });
+  //   }
+  //   this.props.isLoading();
+  // };
 
-    if (query && query.length > 0) {
-      response = await fetch(
-        `${endpoint}?${queryKey}=${query}&page=${this.props.page}`
-      );
-    } else {
-      console.log("before", this.props);
-      response = await fetch(`${endpoint}?page=${this.props.page}`);
-    }
-
-    if (response.ok) {
-      let data = await response.json();
-      this.setState({ data: data.data, pageCount: parseInt(data.pageCount) });
-    } else {
-      let error = await response.json();
-      this.setState({ error });
-    }
-    this.props.isLoading();
-  };
   // handlePageChange = (data) => {
   //   console.log(data);
   //   this.setState({ page: data.selected });
@@ -71,26 +74,20 @@ class DataSource extends Component {
 
   render() {
     return this.props.children({
-      ...this.props.loading,
-      ...this.state,
+      // ...this.props.loading,
+      // ...this.state,
       handleDelete: (id) => this.handleDelete(id),
-      fetchData: () => this.fecthData(),
+      // fetchData: () => this.fecthData(),
       // handlePageClick: (data) => this.handlePageChange(data),
     });
   }
 }
 
 export default connect(
-  (state, router) => {
-    console.log("state in connect", state);
-    return {
-      loading: state.loading,
-    };
-  },
-
+  (state) => ({ ...state }),
   (dispatch) => ({
-    isLoading: () => {
-      dispatch(isLoading());
+    fetchData: (endpoint, id, method, body, params) => {
+      dispatch(fetchData(endpoint, id, method, body, params));
     },
   })
 )(DataSource);

@@ -28,7 +28,7 @@ function SliderContainer({ data, setSelected, selected }) {
       <Carousel
         setSelected={(id) => setSelected(id)}
         selected={selected}
-        data={data}
+        // data={data}
         offsetRadius={offsetRadius}
         animationConfig={config}
       />

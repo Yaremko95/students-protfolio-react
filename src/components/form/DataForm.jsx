@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Form } from "react-bootstrap";
 
 function DataForm(props) {
-  const { onSubmit, setData, data } = props;
+  const { onSubmit, setData, singleData } = props;
   return (
     <Form onSubmit={(e) => onSubmit(e)}>
       <Form.Group controlId="formBasicEmail">
@@ -10,7 +10,7 @@ function DataForm(props) {
         <Form.Control
           type="text"
           placeholder="Enter name"
-          value={data.name}
+          value={singleData.name}
           onChange={(e) => setData({ name: e.target.value })}
         />
       </Form.Group>
@@ -19,7 +19,7 @@ function DataForm(props) {
         <Form.Control
           type="text"
           placeholder="Enter surname"
-          value={data.surname}
+          value={singleData.surname}
           onChange={(e) => setData({ surname: e.target.value })}
         />
       </Form.Group>
@@ -28,7 +28,7 @@ function DataForm(props) {
         <Form.Control
           type="text"
           placeholder="Enter email"
-          value={data.email}
+          value={singleData.email}
           onChange={(e) => setData({ email: e.target.value })}
         />
       </Form.Group>
@@ -37,7 +37,7 @@ function DataForm(props) {
         <Form.Control
           type="text"
           placeholder="Enter image"
-          value={data.image}
+          value={singleData.image}
           onChange={(e) => setData({ image: e.target.value })}
         />
       </Form.Group>
@@ -45,7 +45,7 @@ function DataForm(props) {
         <Form.Label>Date of Birth</Form.Label>
         <Form.Control
           type="date"
-          value={data.dateOfBirth}
+          value={singleData.dateOfBirth}
           onChange={(e) => setData({ dateOfBirth: e.target.value })}
         />
       </Form.Group>

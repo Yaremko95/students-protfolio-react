@@ -1,6 +1,7 @@
 import React from "react";
 import { createUseStyles } from "react-jss";
 import Slide from "./Slide";
+import { connect } from "react-redux";
 function Carousel(props) {
   const [index, setIndex] = React.useState(0);
   const [goToSlide, setGoToSlide] = React.useState(null);
@@ -53,7 +54,7 @@ function Carousel(props) {
 
   const getPresentableSlides = () => {
     const { data, selected } = props;
-
+    console.log("presentableSlides", props);
     let { offsetRadius } = props;
     offsetRadius = clampOffsetRadius(offsetRadius);
     console.log("offsetRadius", offsetRadius);
@@ -62,7 +63,7 @@ function Carousel(props) {
     for (let i = -offsetRadius; i < 1 + offsetRadius; i++) {
       presentableSlides.push(data[modBySlidesLength(index + i)]);
     }
-    console.log(presentableSlides);
+
     return presentableSlides;
   };
   const { animationConfig, offsetRadius } = props;
@@ -87,4 +88,4 @@ Carousel.defaultProps = {
   animationConfig: { tension: 120, friction: 14 },
 };
 
-export default Carousel;
+export default connect((state) => ({ ...state }))(Carousel);

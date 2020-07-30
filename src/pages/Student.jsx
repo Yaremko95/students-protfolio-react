@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
+import { connect } from "react-redux";
 import { createUseStyles } from "react-jss";
 import ProfileImg from "../components/ui/profileImage/ProfileImg";
 import SliderContainer from "../components/ui/sideBar/SliderContainer";
@@ -24,7 +25,7 @@ function Student(props) {
   });
   const classes = useStyle();
   const [selected, setSelected] = React.useState(props.match.params.studentId);
-  console.log(selected);
+  console.log("selected", selected);
   const animate = useSpring({
     opacity: 1,
     from: { opacity: 0 },
@@ -38,7 +39,7 @@ function Student(props) {
           {({ data }) => {
             return (
               <SliderContainer
-                data={data}
+                // data={data}
                 setSelected={setSelected}
                 selected={selected}
               />
@@ -46,8 +47,9 @@ function Student(props) {
           }}
         </DataSource>
       </Col>
-      <DataSource endpoint={`http://localhost:3000/students/${selected}`}>
-        {({ data }) => {
+      <DataSource endpoint={`http://localhost:3000/students/`} param={selected}>
+        {() => {
+          const { student } = props;
           return (
             <animated.div
               className={"col-9 " + classes.profileContainer}
@@ -55,10 +57,10 @@ function Student(props) {
             >
               <div>
                 <span className={classes.title}>
-                  {data.name} {data.surname}
+                  {student.name} {student.surname}
                 </span>
               </div>
-              <ProfileImg data={data} />
+              <ProfileImg data={student} />
             </animated.div>
           );
         }}
@@ -67,4 +69,4 @@ function Student(props) {
   );
 }
 
-export default Student;
+export default connect((state) => ({ ...state }))(Student);

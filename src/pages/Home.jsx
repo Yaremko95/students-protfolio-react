@@ -23,7 +23,7 @@ function Home(props) {
       page={page}
       queryKey={"name"}
     >
-      {({ pageCount, data, handleDelete, fetchData }) => {
+      {({ pageCount, handleDelete, fetchData }) => {
         {
           console.log("data");
         }
@@ -88,7 +88,7 @@ function Home(props) {
                     </tr>
                   </thead>
                   <tbody>
-                    {data.map((student) => (
+                    {props.data.map((student) => (
                       <tr key={student._id}>
                         <td
                           onClick={() =>
@@ -114,10 +114,11 @@ function Home(props) {
                             trigger={<Button variant="primary">Update</Button>}
                           >
                             <UpdateData
-                              data={student}
-                              fetchData={fetchData}
+                              singleData={student}
+                              // fetchData={fetchData}
                               method={"PUT"}
-                              endpoint={`http://localhost:3000/students/${student._id}`}
+                              endpoint={`http://localhost:3000/students/`}
+                              param={student._id}
                             >
                               <DataForm />
                             </UpdateData>
