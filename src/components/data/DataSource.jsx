@@ -64,12 +64,17 @@ class DataSource extends Component {
 
   handleDelete = async (id) => {
     const { endpoint, param } = this.props;
-    let response = await fetch(endpoint + id, {
-      method: "DELETE",
-    });
-    if (response.ok) {
-      this.fecthData();
+    this.props.fetchData(this.props.endpoint, id, "DELETE");
+    if (!this.props.error) {
+      this.props.isLoading();
+      this.props.fetchData(endpoint);
     }
+    // let response = await fetch(endpoint + id, {
+    //   method: "DELETE",
+    // });
+    // if (response.ok) {
+    //   this.fecthData();
+    // }
   };
 
   render() {
@@ -88,6 +93,9 @@ export default connect(
   (dispatch) => ({
     fetchData: (endpoint, id, method, body, params) => {
       dispatch(fetchData(endpoint, id, method, body, params));
+    },
+    isLoading: () => {
+      dispatch(isLoading());
     },
   })
 )(DataSource);

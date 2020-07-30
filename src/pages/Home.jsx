@@ -36,7 +36,7 @@ function Home(props) {
                   trigger={<Button variant="primary">Add Student</Button>}
                 >
                   <UpdateData
-                    fetchData={fetchData}
+                    // fetchData={fetchData}
                     method={"POST"}
                     endpoint={`http://localhost:3000/students/`}
                   >

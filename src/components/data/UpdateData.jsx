@@ -15,7 +15,7 @@ class UpdateData extends Component {
 
     const { endpoint, method, fetchData, closeModal, param } = this.props;
     console.log("response", this.state.data);
-    delete this.state.data._id;
+    delete this.state.singleData._id;
     this.props.fetchData(
       endpoint,
       param ? param : "",
